@@ -104,3 +104,11 @@ Route::get('/admin', function () {
 //user name in dashbord 
 use App\Http\Controllers\Auth\UserProfileController;
 Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+
+
+
+
+
+Route::get('/userss', function () {
+    return view('admin.userss');
+})->name('userss');
