@@ -15,4 +15,5 @@ class UserProfileController extends Controller
         // تمرير بيانات المستخدم إلى العرض
         return view('user.profile', ['user' => $user]);
     }
+
 }

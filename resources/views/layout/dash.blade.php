@@ -94,7 +94,7 @@
                 <i class="mdi mdi-speedometer"></i>
               </span>
               <span class="menu-title">Dashboard</span>
-            </a>https://github.com/Qutiba98/master2
+            </a>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -125,7 +125,7 @@
 
 
           <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="{{ route('users') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-account-multiple-outline"></i>
               </span>
