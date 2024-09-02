@@ -29,7 +29,7 @@ class CreateInventoryTable extends Migration
     }
 
     /**
-     * التراجع عن التهجير.
+     * ايلتراجع عن التهجير.
      *
      * @return void
      */
