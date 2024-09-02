@@ -68,5 +68,3 @@ class RegisteredUserController extends Controller
         return redirect()->route('login')->with('successRegister', 'Registration successful. Please log in.');
     }
 }
-
-
