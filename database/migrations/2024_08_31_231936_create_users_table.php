@@ -9,16 +9,17 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('number')->unique();
-            $table->integer('role_id');
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+            $table->string('address'); // إضافة عمود العنوان
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('number_verified_at')->nullable();
             $table->string('password');
-            $table->string('remember_token')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

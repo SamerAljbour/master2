@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,11 +14,17 @@ class CreateInventoryTable extends Migration
     public function up()
     {
         Schema::create('inventory', function (Blueprint $table) {
-            $table->id(); // ينشئ عموداً رئيسياً من نوع bigint مع زيادة تلقائية
-            $table->string('name'); // ينشئ عموداً من نوع varchar(255) لتخزين اسم المخزون
-            $table->integer('location_id'); // ينشئ عموداً من نوع int لتخزين معرف الموقع
-            $table->string('space'); // ينشئ عموداً من نوع varchar(255) لتخزين مساحة التخزين
-            $table->timestamps(); // ينشئ عمودين لتوقيت الإنشاء والتحديث (اختياري ولكن شائع الاستخدام)
+            $table->id(); // عمود رئيسي من نوع bigint مع زيادة تلقائية
+            $table->string('name'); // عمود لتخزين اسم المخزون
+            $table->unsignedBigInteger('location_id'); // تأكد من أن النوع bigint
+
+            // إضافة المفتاح الخارجي
+            $table->foreign('location_id')
+                  ->references('id')->on('inventory_location')
+                  ->onDelete('cascade'); // تعديل عملية الحذف حسب الحاجة
+
+            $table->string('space'); // عمود لتخزين مساحة التخزين
+            $table->timestamps(); // ينشئ عمودين لتوقيت الإنشاء والتحديث
         });
     }
 
