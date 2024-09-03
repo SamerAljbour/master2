@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\UserDashboardController; // إضافة وحدة تحكم لوحة القيادة للمستخدم
-use App\Http\Controllers\HomeController; // إضافة وحدة تحكم الصفحة الرئيسية إذا كانت موجودة
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AdminController; // استيراد AdminController
 
 /*
 |--------------------------------------------------------------------------
@@ -20,71 +21,95 @@ use App\Http\Controllers\HomeController; // إضافة وحدة تحكم الص�
 
 // الصفحة الرئيسية
 Route::get('home', function () {
-    return view('frontend.home'); // تصحيح العرض لملف index.blade.php
+    return view('frontend.home');
 })->name('home');
 
-// صفحة المدونة الفردية
+// صفحات أخرى
 Route::get('/single-blog', function () {
-    return view('frontend.single-blog'); // تصحيح العرض لملف single-blog.blade.php
+    return view('frontend.single-blog');
 })->name('single-blog');
 
-// صفحة الخدمة
 Route::get('/service', function () {
-    return view('frontend.service'); // تصحيح العرض لملف service.blade.php
+    return view('frontend.service');
 })->name('service');
 
-// تفاصيل الخدمة
 Route::get('/service-details', function () {
-    return view('frontend.service_details'); // تصحيح العرض لملف service_details.blade.php
+    return view('frontend.service_details');
 })->name('service-details');
 
-// صفحة رئيسية أخرى
 Route::get('/main', function () {
-    return view('frontend.main'); // تصحيح العرض لملف main.blade.php
+    return view('frontend.main');
 })->name('main');
 
-// عناصر إضافية
 Route::get('/elements', function () {
-    return view('frontend.elements'); // تصحيح العرض لملف elements.blade.php
+    return view('frontend.elements');
 })->name('elements');
 
-// صفحة الاتصال
 Route::get('/contact', function () {
-    return view('frontend.contact'); // تصحيح العرض لملف contact.blade.php
+    return view('frontend.contact');
 })->name('contact');
 
-// صفحة المدونة
 Route::get('/blog', function () {
-    return view('frontend.blog'); // تصحيح العرض لملف blog.blade.php
+    return view('frontend.blog');
 })->name('blog');
 
-// صفحة حول
 Route::get('/about', function () {
-    return view('frontend.about'); // تصحيح العرض لملف about.blade.php
+    return view('frontend.about');
 })->name('about');
 
-
-
-
-// Route for displaying the login form
+// مسارات تسجيل الدخول والتسجيل
 Route::get('/login', function () {
-    return view('login\Log in\login'); // Corrected path for login.blade.php
+    return view('login.Log in.login');
 })->name('login');
 
-// Route for handling login form submission
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
-// Route for displaying the registration form
 Route::get('/register', function () {
-    return view('login.Register.register'); // Corrected path for register.blade.php
+    return view('login.Register.register');
 })->name('register');
 
-// Route for handling registration form submission
 Route::post('/register', [RegisteredUserController::class, 'register'])->name('register.post');
 
+// لوحة تحكم المدير
+Route::prefix('admin')->name('admin.')->group(function () {
+    // الصفحة الرئيسية للمدير
+    Route::get('/', function () {
+        return view('admin.home');
+    })->name('home');
+
+    // مسارات إدارة المستخدمين
+    Route::get('/users', [AdminController::class, 'showUsers'])->name('showUsers');
+    Route::get('/users/{id}/edit', [AdminController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [AdminController::class, 'update'])->name('users.update');
+    Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('users.register');
+    Route::post('/register', [AdminController::class, 'store'])->name('users.store');
+});
 
 
-// صفحة استعادة كلمة المرور
+
+
+// Route for handling the user registration form submission
+Route::post('/admin/userss', [AdminController::class, 'store'])->name('admin.userss.store');
+
+// Route to show the edit user form
+// Route::get('/admin/userss/{id}/edit', [AdminController::class, 'edit'])->name('admin.userss.edit');
+
+// Route to handle the update user form submission
+// Route::put('/admin/userss/{id}', [AdminController::class, 'update'])->name('admin.userss.update');
+
+// Route to show the registered users list
+// Route::get('/admin/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
+
+Route::get('/showuser', function () {
+    return view('admin.showuser');
+})->name('showuser');
+
+Route::post('/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
+
+
+
+
+// // صفحة استعادة كلمة المرور
 // Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
 // // لوحة القيادة للمستخدم (تأكد من أن المستخدم مسجل دخول)
@@ -95,20 +120,23 @@ Route::post('/register', [RegisteredUserController::class, 'register'])->name('r
 
 
 
-
-Route::get('/admin', function () {
-    return view('admin.home'); // تصحيح العرض لملف about.blade.php
-});
-
-
-//user name in dashbord 
+// صفحة الملف الشخصي للمستخدم
 use App\Http\Controllers\Auth\UserProfileController;
 Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
 
-
-
-
-
-Route::get('/userss', function () {
+// مسار صفحة إدارة المستخدمين
+Route::get('/admin/userss', function () {
     return view('admin.userss');
 })->name('userss');
+
+// مسار صفحة تحرير المستخدم
+Route::get('/edituser', function () {
+    return view('admin.edituser');
+})->name('edituser');
+
+// // مسار صفحة عرض المستخدمين
+// Route::get('/showuser', function () {
+//     return view('admin.showuser');
+// })->name('showuser');
+
+Route::get('/showuser', [AdminController::class, 'showUsers'])->name('showuser');

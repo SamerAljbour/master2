@@ -134,6 +134,25 @@
           </li>
 
 
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('edituser') }}">
+              <span class="menu-icon">
+                <i class="mdi mdi-account-multiple-outline"></i>
+              </span>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
+
+
+          
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('showuser') }}">
+              <span class="menu-icon">
+                <i class="mdi mdi-account-multiple-outline"></i>
+              </span>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
 
 
 

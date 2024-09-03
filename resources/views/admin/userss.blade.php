@@ -1,57 +1,105 @@
-@include('layout.dash')
-<!-- partial -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin User Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <!-- Include Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+</head>
+<body>
+    @include('layout.dash')
 
+    @section('content')
+    <div class="main-panel">  
+        <div class="content-wrapper">
+            <div class="card-body">
+                <h4 class="card-title">{{ isset($user) ? 'Edit User' : 'Register User' }}</h4>
+                <p class="card-description">{{ isset($user) ? 'Update user details' : 'Fill in the form to register a new user' }}</p>
+                
+                <!-- Display Success Message -->
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-<div class="main-panel">  
+                <!-- Registration/Edit Form -->
+                <form class="forms-sample" method="POST" action="{{ isset($user) ? route('admin.updateuser', $user->id) : route('admin.userss.store') }}">
+                    @csrf
+                    @if (isset($user))
+                        @method('PUT')
+                    @endif
 
-<div class="content-wrapper">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name ?? '') }}" placeholder="Name">
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
 
-            <div class="row">
-              <div class="col-12 grid-margin stretch-card">
-                <div class="card corona-gradient-card">
-                  <div class="card-body py-0 px-0 px-sm-3">
-                    <div class="row align-items-center">
-                      <div class="col-4 col-sm-3 col-xl-2">
-                        <img src="assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
-                      </div>
-                      <div class="col-5 col-sm-7 col-xl-8 p-0">
-                        <h4 class="mb-1 mb-sm-0">Want even more features?</h4>
-  
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email ?? '') }}" placeholder="Email">
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
 
-</p>
+                    @if (!isset($user))
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
-          <footer class="footer">
-            <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
-            </div>
-          </footer>
-          <!-- partial -->
+                        <div class="form-group">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
+                            @error('password_confirmation')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    @endif
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address', $user->address ?? '') }}" placeholder="Address">
+                        @error('address')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2">{{ isset($user) ? 'Update' : 'Submit' }}</button>
+                    <button type="button" class="btn btn-dark" onclick="window.history.back();">Cancel</button>
+                </form>
+            </div>        
         </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
-  </body>
+
+    <!-- Include Scripts -->
+    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('assets/js/misc.js') }}"></script>
+    <script src="{{ asset('assets/js/settings.js') }}"></script>
+    <script src="{{ asset('assets/js/todolist.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    
+</body>
 </html>

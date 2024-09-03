@@ -12,9 +12,9 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('number')->unique();
+            $table->string('number')->unique()->nullable();
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
-            $table->string('address'); // إضافة عمود العنوان
+            $table->string('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('number_verified_at')->nullable();
             $table->string('password');
