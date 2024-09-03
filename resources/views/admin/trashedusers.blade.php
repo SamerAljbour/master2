@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Users List</title>
+    <title>Trashed Users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css"> <!-- إذا كنت تستخدم أيقونات Material Design -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
 </head>
 <body>
 
     @include('layout.dash')
 
     <div class="container mt-5">
-        <h2 class="mb-4">Registered Users</h2>
+        <h2 class="mb-4">Trashed Users</h2>
 
         <!-- Success Message -->
         @if(session('success'))
@@ -24,7 +25,7 @@
 
         <!-- Users Table -->
         <div class="card">
-            <div class="card-header">List of Users</div>
+            <div class="card-header">List of Trashed Users</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -35,8 +36,7 @@
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Address</th>
-                                <th>Status</th> <!-- عمود الحالة -->
-                                <th>Actions</th> <!-- عمود الإجراءات -->
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,25 +48,9 @@
                                     <td>{{ $user->number }}</td>
                                     <td>{{ $user->address }}</td>
                                     <td>
-                                        @if($user->deleted_at)
-                                            <span class="text-danger">Deleted</span>
-                                        @else
-                                            <span class="text-success">Active</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!$user->deleted_at)
-                                            <a href="{{ route('edituser', $user->id) }}" class="btn btn-outline-secondary btn-icon-text">
-                                                Edit <i class="mdi mdi-file-check btn-icon-append"></i>
-                                            </a>
-                                            <a href="{{ route('admin.softdeleteuser', $user->id) }}" class="btn btn-outline-warning btn-icon-text">
-                                                Soft Delete <i class="mdi mdi-delete btn-icon-append"></i>
-                                            </a>
-                                        @else
-                                            <a href="{{ route('restoreuser', $user->id) }}" class="btn btn-outline-success btn-icon-text">
-                                                Restore <i class="mdi mdi-recycle btn-icon-append"></i>
-                                            </a>
-                                        @endif
+                                        <a href="{{ route('admin.trashedusers', $user->id) }}" class="btn btn-outline-success btn-icon-text">
+                                            Restore <i class="mdi mdi-recycle btn-icon-append"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

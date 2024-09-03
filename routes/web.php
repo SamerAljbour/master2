@@ -100,13 +100,6 @@ Route::post('/admin/userss', [AdminController::class, 'store'])->name('admin.use
 // Route to show the registered users list
 // Route::get('/admin/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
 
-Route::get('/showuser', function () {
-    return view('admin.showuser');
-})->name('showuser');
-
-Route::post('/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
-
-
 
 
 // // صفحة استعادة كلمة المرور
@@ -118,6 +111,11 @@ Route::post('/showuser', [AdminController::class, 'showUsers'])->name('admin.sho
 // });
 
 
+// Route::get('/showuser', function () {
+//     return view('admin.showuser');
+// })->name('showuser');
+
+// Route::post('/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
 
 
 // صفحة الملف الشخصي للمستخدم
@@ -134,9 +132,18 @@ Route::get('/edituser', function () {
     return view('admin.edituser');
 })->name('edituser');
 
-// // مسار صفحة عرض المستخدمين
-// Route::get('/showuser', function () {
-//     return view('admin.showuser');
-// })->name('showuser');
+
 
 Route::get('/showuser', [AdminController::class, 'showUsers'])->name('showuser');
+
+Route::get('/edituser/{id}', [AdminController::class, 'edit'])->name('edituser');
+Route::put('/edituser/{id}', [AdminController::class, 'update'])->name('updateuser');
+
+Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('deleteuser');
+
+
+
+
+Route::get('admin/users/trashed', [AdminController::class, 'showTrashedUsers'])->name('admin.trashedusers');
+Route::get('admin/users/restore/{id}', [AdminController::class, 'restore'])->name('admin.restoreuser');
+Route::get('admin/user/{id}/softdelete', [AdminController::class, 'destroy'])->name('admin.softdeleteuser');

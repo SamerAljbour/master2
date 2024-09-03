@@ -37,14 +37,13 @@ class AdminController extends Controller
             'number' => $data['number'],
             'address' => $data['address'],
             'password' => Hash::make($data['password']),
-            'role_id' => 1, // تأكد من صحة قيمة role_id حسب متطلباتك
+            'role_id' => 1,
         ]);
     }
 
     // معالجة تقديم نموذج تسجيل مستخدم جديد
     public function store(Request $request)
     {
-        // التحقق من صحة البيانات
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -53,31 +52,28 @@ class AdminController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        // إنشاء المستخدم
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'number' => $data['number'],
             'address' => $data['address'],
             'password' => Hash::make($data['password']),
-            'role_id' => 1, // تأكد من صحة قيمة role_id حسب متطلباتك
+            'role_id' => 1,
         ]);
 
-        // إعادة التوجيه مع رسالة نجاح
         return redirect()->back()->with('success', 'User created successfully!');
     }
 
     // عرض نموذج تعديل مستخدم
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Retrieve the user or fail if not found
-        return view('admin.edituser', compact('user')); // Pass the user data to the view
+        $user = User::findOrFail($id);
+        return view('admin.edituser', compact('user'));
     }
     
     // معالجة تقديم نموذج تعديل مستخدم
     public function update(Request $request, $id)
     {
-        // Validate the data
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
@@ -87,8 +83,6 @@ class AdminController extends Controller
         ]);
     
         $user = User::findOrFail($id);
-    
-        // Update user data
         $user->update([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -97,18 +91,39 @@ class AdminController extends Controller
             'password' => $data['password'] ? Hash::make($data['password']) : $user->password,
         ]);
 
-        // Redirect with success message
-        return redirect()->route('admin.edituser', $id)->with('success', 'User updated successfully!');
+        return redirect()->route('edituser', $id)->with('success', 'User updated successfully!');
     }
 
     // عرض قائمة المستخدمين
     public function showUsers()
     {
-        // جلب جميع المستخدمين
         $users = User::all();
-        
-
-        // عرض البيانات في العرض showuser.blade.php
         return view('admin.showuser', compact('users'));
     }
+
+    // عرض قائمة المستخدمين المحذوفين
+    public function showTrashedUsers()
+    {
+        $users = User::onlyTrashed()->get();
+        return view('admin.trashedusers', compact('users'));
+    }
+
+    // حذف ناعم لمستخدم
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return redirect()->back()->with('success', 'User soft deleted successfully.');
+    }
+
+    // استعادة مستخدم محذوف
+        public function restore($id)
+        {
+            $user = User::onlyTrashed()->findOrFail($id);
+            $user->restore();
+            
+            return redirect()->route('admin.trashedusers')->with('success', 'User restored successfully.');
+        }
+
 }

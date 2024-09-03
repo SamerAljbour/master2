@@ -1,21 +1,29 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit User</title>
     <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
     <!-- Include Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+
 </head>
 <body>
-    @include('layout.dash')
+    
+        @include('layout.dash')
 
-    <div class="main-panel">
-        <div class="content-wrapper">
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">Edit User</div>
             <div class="card-body">
-                <h4 class="card-title">Edit User</h4>
                 <p class="card-description">Update user details below</p>
 
                 <!-- Display Success Message -->
@@ -26,10 +34,10 @@
                 @endif
 
                 <!-- Edit User Form -->
-                <form class="forms-sample" method="POST" action="{{ route('admin.userss.update', $user->id) }}">
+                <form class="forms-sample" method="POST" action="{{ route('updateuser', $user->id) }}">
                     @csrf
                     @method('PUT') <!-- Ensure the form sends a PUT request -->
-                
+                    
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}" placeholder="Name">
@@ -90,20 +98,16 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary mr-2">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                     <button type="button" class="btn btn-dark" onclick="window.history.back();">Cancel</button>
                 </form>
+
             </div>
         </div>
     </div>
 
-    <!-- Include Scripts -->
-    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
-    <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-    <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('assets/js/misc.js') }}"></script>
-    <script src="{{ asset('assets/js/settings.js') }}"></script>
-    <script src="{{ asset('assets/js/todolist.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 </body>
 </html>
+
+
+

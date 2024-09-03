@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    
     <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
     <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
@@ -134,15 +135,6 @@
           </li>
 
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ route('edituser') }}">
-              <span class="menu-icon">
-                <i class="mdi mdi-account-multiple-outline"></i>
-              </span>
-              <span class="menu-title">Users</span>
-            </a>
-          </li>
-
 
           
           <li class="nav-item menu-items">
@@ -150,9 +142,23 @@
               <span class="menu-icon">
                 <i class="mdi mdi-account-multiple-outline"></i>
               </span>
-              <span class="menu-title">Users</span>
+              <span class="menu-title">ShowUser</span>
             </a>
           </li>
+
+
+
+
+          
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ route('admin.trashedusers') }}">
+              <span class="menu-icon">
+                <i class="mdi mdi-account-multiple-outline"></i>
+              </span>
+              <span class="menu-title">TrashedUsers</span>
+            </a>
+          </li>
+
 
 
 
