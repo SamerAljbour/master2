@@ -39,22 +39,25 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->number }}</td>
-                                    <td>{{ $user->address }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.trashedusers', $user->id) }}" class="btn btn-outline-success btn-icon-text">
-                                            Restore <i class="mdi mdi-recycle btn-icon-append"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+<tbody>
+    @foreach($users as $user)
+        <tr>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->number }}</td>
+            <td>{{ $user->address }}</td>
+            <td>
+                <a href="{{ route('admin.restoreuser', $user->id) }}" class="btn btn-outline-success btn-icon-text">
+                    Restore <i class="mdi mdi-recycle btn-icon-append"></i>
+                </a>
+                <a href="{{ route('admin.forceDeleteUser', $user->id) }}" class="btn btn-outline-danger btn-icon-text">
+                    Permanently Delete <i class="mdi mdi-delete btn-icon-append"></i>
+                </a>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
                     </table>
                 </div>
             </div>

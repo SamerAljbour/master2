@@ -117,6 +117,16 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'User soft deleted successfully.');
     }
 
+        // حذف نهائي لمستخدم
+        public function forceDelete($id)
+        {
+            $user = User::onlyTrashed()->findOrFail($id);
+            $user->forceDelete();
+            
+            return redirect()->back()->with('success', 'User permanently deleted successfully.');
+        }
+
+
     // استعادة مستخدم محذوف
         public function restore($id)
         {

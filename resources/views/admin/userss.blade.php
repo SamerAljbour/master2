@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin User Form</title>
     <!-- Include Bootstrap CSS -->
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
-    <!-- Include Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">     <!-- icone -->
+
+
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+
+ 
 </head>
 <body>
     @include('layout.dash')
