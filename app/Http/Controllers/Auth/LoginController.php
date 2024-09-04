@@ -11,7 +11,7 @@ class LoginController extends Controller
     // عرض نموذج تسجيل الدخول
     public function showLoginForm()
     {
-        return view('login\Log in\login'); // تعديل المسار لملف login.blade.php
+        return view('login.Log in.login'); // تأكد من صحة مسار ملف login.blade.php
     }
 
     // معالجة تسجيل الدخول
@@ -25,7 +25,19 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/home'); // إعادة التوجيه إلى الصفحة الرئيسية بعد تسجيل الدخول
+            $user = Auth::user();
+            
+            // تحقق من دور المستخدم
+            if ($user->role_id === 1) {
+                // افترض أن الدور 1 هو للدور العادي
+                return redirect()->intended('/home');
+            } elseif ($user->role_id === 2 || $user->role_id === 3) {
+                // افترض أن الأدوار 2 و 3 هي للأدمن والسوبر أدمن
+                return redirect()->intended('/admin');
+            }
+
+            // التوجيه الافتراضي إذا لم يتطابق أي من الأدوار
+            return redirect()->intended('/home');
         }
 
         return back()->withErrors([

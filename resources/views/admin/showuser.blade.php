@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Users List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css"> <!-- إذا كنت تستخدم أيقونات Material Design -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
 </head>
 <body>
 
@@ -15,14 +16,16 @@
     <div class="container mt-5">
         <h2 class="mb-4">Registered Users</h2>
 
-        <!-- Success Message -->
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
 
-        <!-- Users Table -->
+        <a href="{{ route('admin.createuser') }}" class="btn btn-primary mb-3">
+            Create New Account
+        </a>
+
         <div class="card">
             <div class="card-header">List of Users</div>
             <div class="card-body">
@@ -35,8 +38,8 @@
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Address</th>
-                                <th>Status</th> <!-- عمود الحالة -->
-                                <th>Actions</th> <!-- عمود الإجراءات -->
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,14 +59,14 @@
                                     </td>
                                     <td>
                                         @if(!$user->deleted_at)
-                                            <a href="{{ route('edituser', $user->id) }}" class="btn btn-outline-secondary btn-icon-text">
+                                            <a href="{{ route('admin.edituser', $user->id) }}" class="btn btn-outline-secondary btn-icon-text">
                                                 Edit <i class="mdi mdi-file-check btn-icon-append"></i>
                                             </a>
                                             <a href="{{ route('admin.softdeleteuser', $user->id) }}" class="btn btn-outline-warning btn-icon-text">
                                                 Soft Delete <i class="mdi mdi-delete btn-icon-append"></i>
                                             </a>
                                         @else
-                                            <a href="{{ route('restoreuser', $user->id) }}" class="btn btn-outline-success btn-icon-text">
+                                            <a href="{{ route('admin.restoreuser', $user->id) }}" class="btn btn-outline-success btn-icon-text">
                                                 Restore <i class="mdi mdi-recycle btn-icon-append"></i>
                                             </a>
                                         @endif
@@ -75,7 +78,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

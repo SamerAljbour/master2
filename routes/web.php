@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController; // استيراد AdminController
+use App\Http\Controllers\Auth\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,72 +71,35 @@ Route::get('/register', function () {
 
 Route::post('/register', [RegisteredUserController::class, 'register'])->name('register.post');
 
-// لوحة تحكم المدير
-Route::prefix('admin')->name('admin.')->group(function () {
+// صفحة الملف الشخصي للمستخدم
+Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+
+// صفحات الأدمن، فقط الأدمن والسوبر أدمن يمكنهم الوصول إليها
+
+
+Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group(function () {
     // الصفحة الرئيسية للمدير
     Route::get('/', function () {
         return view('admin.home');
     })->name('home');
 
     // مسارات إدارة المستخدمين
-    Route::get('/users', [AdminController::class, 'showUsers'])->name('showUsers');
-    Route::get('/users/{id}/edit', [AdminController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{id}', [AdminController::class, 'update'])->name('users.update');
-    Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('users.register');
-    Route::post('/register', [AdminController::class, 'store'])->name('users.store');
+    Route::get('/showuser', [AdminController::class, 'showUsers'])->name('showUsers');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('createuser');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('storeUser');
+    Route::get('/edituser/{id}', [AdminController::class, 'edit'])->name('edituser');
+    Route::put('/admin/users/{id}', [AdminController::class, 'update'])->name('updateuser');
+
+    Route::get('/users/trashed', [AdminController::class, 'showTrashedUsers'])->name('trashedusers');
+    Route::get('/user/{id}/restore', [AdminController::class, 'restore'])->name('restoreuser');
+    Route::get('/user/{id}/softdelete', [AdminController::class, 'destroy'])->name('softdeleteuser');
+    Route::get('admin/users/forcedelete/{id}', [AdminController::class, 'forceDelete'])->name('forceDeleteUser');
 });
 
 
 
 
-// Route for handling the user registration form submission
-Route::post('/admin/userss', [AdminController::class, 'store'])->name('admin.userss.store');
-
-// Route to show the edit user form
-// Route::get('/admin/userss/{id}/edit', [AdminController::class, 'edit'])->name('admin.userss.edit');
-
-// Route to handle the update user form submission
-// Route::put('/admin/userss/{id}', [AdminController::class, 'update'])->name('admin.userss.update');
-
-// Route to show the registered users list
-// Route::get('/admin/showuser', [AdminController::class, 'showUsers'])->name('admin.showuser');
-
-
-
-// // صفحة استعادة كلمة المرور
-// Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-
-// // لوحة القيادة للمستخدم (تأكد من أن المستخدم مسجل دخول)
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-// });
 
 
 
 
-// صفحة الملف الشخصي للمستخدم
-use App\Http\Controllers\Auth\UserProfileController;
-Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-
-// مسار صفحة إدارة المستخدمين
-Route::get('/admin/userss', function () {
-    return view('admin.userss');
-})->name('userss');
-
-// مسار صفحة تحرير المستخدم
-Route::get('/edituser', function () {
-    return view('admin.edituser');
-})->name('edituser');
-
-
-
-Route::get('/showuser', [AdminController::class, 'showUsers'])->name('showuser');
-Route::get('/edituser/{id}', [AdminController::class, 'edit'])->name('edituser');
-Route::put('/edituser/{id}', [AdminController::class, 'update'])->name('updateuser');
-
-
-Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('deleteuser');
-Route::get('admin/users/trashed', [AdminController::class, 'showTrashedUsers'])->name('admin.trashedusers');
-Route::get('admin/users/restore/{id}', [AdminController::class, 'restore'])->name('admin.restoreuser');
-Route::get('admin/user/{id}/softdelete', [AdminController::class, 'destroy'])->name('admin.softdeleteuser');
-Route::get('admin/users/forcedelete/{id}', [AdminController::class, 'forceDelete'])->name('admin.forceDeleteUser');

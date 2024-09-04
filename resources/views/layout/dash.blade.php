@@ -125,20 +125,11 @@
 
 
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ route('userss') }}">
-              <span class="menu-icon">
-                <i class="mdi mdi-account-multiple-outline"></i>
-              </span>
-              <span class="menu-title">Users</span>
-            </a>
-          </li>
-
-
+    
 
           
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ route('showuser') }}">
+            <a class="nav-link" href="{{ route('admin.showUsers') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-account-multiple-outline"></i>
               </span>
@@ -150,15 +141,14 @@
 
 
           
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ route('admin.trashedusers') }}">
-              <span class="menu-icon">
-                <i class="mdi mdi-account-multiple-outline"></i>
-              </span>
-              <span class="menu-title">TrashedUsers</span>
-            </a>
-          </li>
-
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{ route('admin.trashedusers') }}">
+          <span class="menu-icon">
+            <i class="mdi mdi-account-multiple-outline"></i>
+          </span>
+          <span class="menu-title">Trashed Users</span>
+        </a>
+    </li>
 
 
 
