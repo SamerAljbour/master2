@@ -11,21 +11,26 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     // عرض نموذج تسجيل مستخدم جديد
-    public function showRegistrationForm()
+    public function createUser()
     {
-        return view('admin.userss');
+        return view('admin.createuser');
     }
 
-    // التحقق من صحة البيانات
-    protected function validator(array $data)
+    // معالجة تقديم نموذج تسجيل مستخدم جديد
+    public function storeUser(Request $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'number' => ['required', 'string', 'max:20', 'unique:users'],
-            'address' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'number' => 'nullable|string|max:20|unique:users,number',
+            'address' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'role_id' => 'required|exists:roles,id', // افترض أن هناك جدولاً للأدوار
         ]);
+
+        $this->create($request->all());
+
+        return redirect()->route('admin.showusers')->with('success', 'User created successfully.');
     }
 
     // إنشاء مستخدم جديد
@@ -41,21 +46,11 @@ class AdminController extends Controller
         ]);
     }
 
-    // معالجة تقديم نموذج تسجيل مستخدم جديد
-    public function store(Request $request)
+    // عرض قائمة المستخدمين
+    public function showUsers()
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'number' => 'required|string|max:20|unique:users,number',
-            'address' => 'required|string|max:255',
-            'password' => 'required|string|confirmed|min:8',
-            'role_id' => 'nullable|exists:roles,id', // جعل role_id غير إجباري إذا لزم الأمر
-        ]);
-
-        $this->create($data);
-
-        return redirect()->back()->with('success', 'User created successfully!');
+        $users = User::all();
+        return view('admin.showuser', compact('users'));
     }
 
     // عرض نموذج تعديل مستخدم
@@ -65,54 +60,27 @@ class AdminController extends Controller
         return view('admin.edituser', compact('user'));
     }
     
-// معالجة تقديم نموذج تعديل مستخدم
-public function update(Request $request, $id)
-{
-    $data = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $id,
-        'number' => 'required|string|max:20|unique:users,number,' . $id,
-        'address' => 'required|string|max:255',
-        'password' => 'nullable|string|confirmed|min:8',
-    ]);
-
-    $user = User::findOrFail($id);
-    $user->update([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'number' => $data['number'],
-        'address' => $data['address'],
-        'password' => isset($data['password']) ? Hash::make($data['password']) : $user->password,
-    ]);
-
-    return redirect()->route('admin.edituser', $id)->with('success', 'User updated successfully!');
-}
-
-    // عرض قائمة المستخدمين
-    public function showUsers()
+    // معالجة تقديم نموذج تعديل مستخدم
+    public function update(Request $request, $id)
     {
-        $users = User::all();
-        return view('admin.showuser', compact('users'));
-    }
-
-    public function createUser()
-    {
-        return view('admin.createuser');
-    }
-
-    public function storeUser(Request $request)
-    {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'number' => 'nullable|string|max:20', // إذا كنت تريد حقل الهاتف غير إجباري
-            'password' => 'required|string|min:8|confirmed',
-            'role_id' => 'required|exists:roles,id', // افترض أن هناك جدولاً للأدوار
+            'email' => 'required|email|unique:users,email,' . $id,
+            'number' => 'required|string|max:20|unique:users,number,' . $id,
+            'address' => 'required|string|max:255',
+            'password' => 'nullable|string|confirmed|min:8',
         ]);
 
-        $this->create($request->all());
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'number' => $data['number'],
+            'address' => $data['address'],
+            'password' => isset($data['password']) ? Hash::make($data['password']) : $user->password,
+        ]);
 
-        return redirect()->route('admin.showusers')->with('success', 'User created successfully.');
+        return redirect()->route('admin.edituser', $id)->with('success', 'User updated successfully!');
     }
 
     // عرض قائمة المستخدمين المحذوفين

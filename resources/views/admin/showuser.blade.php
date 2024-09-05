@@ -40,6 +40,8 @@
                                 <th>Address</th>
                                 <th>Status</th>
                                 <th>Actions</th>
+                                <th>Role</th> 
+
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +52,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->number }}</td>
                                     <td>{{ $user->address }}</td>
+
                                     <td>
                                         @if($user->deleted_at)
                                             <span class="text-danger">Deleted</span>
@@ -71,6 +74,22 @@
                                             </a>
                                         @endif
                                     </td>
+
+                                    <td>
+                                        @switch($user->role_id)
+                                            @case(1)
+                                                User
+                                                @break
+                                            @case(2)
+                                                Admin
+                                                @break
+                                            @case(3)
+                                                Super Admin
+                                                @break
+                                            @default
+                                                Unknown
+                                        @endswitch
+                                    </td> 
                                 </tr>
                             @endforeach
                         </tbody>
