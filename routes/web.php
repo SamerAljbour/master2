@@ -88,6 +88,7 @@ Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('createuser');
     Route::post('/users', [AdminController::class, 'storeUser'])->name('storeUser');
 
+
     Route::get('/edituser/{id}', [AdminController::class, 'edit'])->name('edituser');
     Route::put('/users/{id}', [AdminController::class, 'update'])->name('updateuser');
 
@@ -95,6 +96,9 @@ Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group
     Route::get('/user/{id}/restore', [AdminController::class, 'restore'])->name('restoreuser');
     Route::get('/user/{id}/softdelete', [AdminController::class, 'destroy'])->name('softdeleteuser');
     Route::get('/users/forcedelete/{id}', [AdminController::class, 'forceDelete'])->name('forceDeleteUser');
+
+    Route::post('/logout', [App\Http\Controllers\Admin\AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 });
 
 

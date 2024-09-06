@@ -90,6 +90,21 @@
                         @enderror
                     </div>
 
+
+                    <div class="form-group">
+                        <label for="role_id">Role</label>
+                        <select id="role_id" name="role_id" class="form-control" required>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+
+
+
                     <button type="submit" class="btn btn-primary">Update</button>
                     <button type="button" class="btn btn-dark" onclick="window.history.back();">Cancel</button>
                 </form>

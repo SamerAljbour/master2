@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,8 +14,9 @@ class AdminController extends Controller
     // عرض نموذج تسجيل مستخدم جديد
     public function createUser()
     {
-        return view('admin.createuser');
-    }
+        $roles = Role::all();
+        return view('admin.createuser', compact('roles'));
+        }
 
     // معالجة تقديم نموذج تسجيل مستخدم جديد
     public function storeUser(Request $request)
@@ -25,14 +27,14 @@ class AdminController extends Controller
             'number' => 'nullable|string|max:20|unique:users,number',
             'address' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'role_id' => 'required|exists:roles,id', // افترض أن هناك جدولاً للأدوار
+            'role_id' => 'required|exists:roles,id',
         ]);
-
+    
         $this->create($request->all());
-
+    
         return redirect()->route('admin.showusers')->with('success', 'User created successfully.');
     }
-
+    
     // إنشاء مستخدم جديد
     protected function create(array $data)
     {
@@ -57,7 +59,8 @@ class AdminController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.edituser', compact('user'));
+        $roles = Role::all();
+        return view('admin.edituser', compact('user','roles'));
     }
     
     // معالجة تقديم نموذج تعديل مستخدم

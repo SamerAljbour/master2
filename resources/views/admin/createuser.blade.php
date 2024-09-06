@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New User</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
 </head>
 <body>
 
@@ -46,6 +48,7 @@
                     <label for="password_confirmation">Confirm Password</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
+
                 <div class="form-group">
                     <label for="role_id">Role</label>
                     <select id="role_id" name="role_id" class="form-control" required>
@@ -54,7 +57,8 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Create User</button>
+                
+                                <button type="submit" class="btn btn-primary">Create User</button>
             </form>
         </div>
     </div>
