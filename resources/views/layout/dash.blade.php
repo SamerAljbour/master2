@@ -152,14 +152,16 @@
 
 
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-table-large"></i>
-              </span>
-              <span class="menu-title">Tables</span>
-            </a>
-          </li>
+    <li class="nav-item menu-items">
+        <a class="nav-link" href="{{ route('admin.transfers.create') }}">
+            <span class="menu-icon">
+                <i class="mdi mdi-contacts"></i>
+            </span>
+            <span class="menu-title">Create Transfer</span>
+        </a>
+    </li>
+
+
           <li class="nav-item menu-items">
             <a class="nav-link" href="pages/charts/chartjs.html">
               <span class="menu-icon">
@@ -168,6 +170,7 @@
               <span class="menu-title">Charts</span>
             </a>
           </li>
+
           <li class="nav-item menu-items">
             <a class="nav-link" href="pages/icons/mdi.html">
               <span class="menu-icon">
@@ -176,6 +179,8 @@
               <span class="menu-title">Icons</span>
             </a>
           </li>
+
+
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <span class="menu-icon">

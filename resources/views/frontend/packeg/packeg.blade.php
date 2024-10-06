@@ -35,56 +35,29 @@
 </head>
 <body>
     
-
-
-
-   
    <x-navigation />
-
-
-   <!-- service_area  -->
-    <div class="service_area">
-        <div class="container">
-            <div class="row">
+<!-- service_area  -->
+<div class="service_area">
+    <div class="container">
+        <div class="row">
+            @foreach($packageTypes as $packageType)
                 <div class="col-md-6 col-lg-4">
                     <div class="single_service">
                         <div class="thumb">
-                            <img src="img/service/1.png" alt="">
+                            <img src="img/service/{{ $loop->index + 1 }}.png" alt="{{ $packageType->name }}">
                         </div>
                         <div class="service_info">
-                            <h3><a href="Ocean_Freight"> Ocean  Freight</a></h3>
-                            <p>Esteem spirit temper too say adieus who direct esteem.</p>
+                            <h3><a href="{{ route('service.details', $packageType->id) }}">{{ $packageType->name }}</a></h3>
+                            <p>الأبعاد: {{ $packageType->dimensions }}</p> <!-- عرض الأبعاد -->
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="single_service">
-                        <div class="thumb">
-                            <img src="img/service/2.png" alt="">
-                        </div>
-                        <div class="service_info">
-                            <h3><a href="service_details.html">Land Transport</a></h3>
-                            <p>Esteem spirit temper too say adieus who direct esteem.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-
-                    <div class="single_service">
-                        <div class="thumb">
-                            <img src="img/service/3.png" alt="">
-                        </div>
-                        <div class="service_info">
-                            <h3><a href="service_details.html">Air Freight</a></h3>
-                            <p>Esteem spirit temper too say adieus who direct esteem.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            @endforeach
         </div>
     </div>
-    <!--/ service_area  -->
+</div>
+<!--/ service_area  -->
+
 
 <x-footer />
 

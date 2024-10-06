@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController; // استيراد AdminController
 use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\TransferController;
 
 
 /*
@@ -121,10 +122,26 @@ Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group
 
     Route::post('/logout', [App\Http\Controllers\Admin\AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+
+
+// Routes for managing transfers
+Route::get('/transfers/create', [TransferController::class, 'create'])->name('transfers.create');
+Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
+Route::delete('/transfers/{id}', [TransferController::class, 'destroy'])->name('transfers.destroy');
+
+// Edit and update transfer routes
+Route::get('/transfers/{id}/edit', [TransferController::class, 'edit'])->name('transfers.edit');
+Route::put('/transfers/{id}', [TransferController::class, 'update'])->name('transfers.update');
+
 });
 
 
                                                                                                                                                            
 
 
+use App\Http\Controllers\ServiceController;
 
+
+Route::get('/packeg', [ServiceController::class, 'index'])->name('services.index'); // لعرض جميع أنواع الخدمة
+Route::get('/service/{id}', [ServiceController::class, 'show'])->name('service.details'); // عرض تفاصيل خدمة محددة
+Route::get('/packages/{id}', [ServiceController::class, 'show'])->name('packages.show'); // عرض تفاصيل نوع حزمة محددة

@@ -1,5 +1,7 @@
 <?php
 
+// app/Models/PackageType.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,8 +11,11 @@ class PackageType extends Model
 {
     use HasFactory;
 
-    public function inventoryRequests()
-    {
-        return $this->hasMany(InventoryRequest::class, 'package_id');
-    }
+    protected $fillable = [
+        'name',
+        'dimensions',
+        'price',
+        'description',
+    ];
+    
 }
