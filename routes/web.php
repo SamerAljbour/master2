@@ -8,6 +8,8 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController; // استيراد AdminController
 use App\Http\Controllers\Auth\UserProfileController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,9 +76,29 @@ Route::post('/register', [RegisteredUserController::class, 'register'])->name('r
 // صفحة الملف الشخصي للمستخدم
 Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
 
+
+Route::get('/form', function () {
+    return view('frontend.form');
+})->name('frontend.form');
+
+Route::get('/packeg', function () {
+    return view('frontend.packeg.packeg');
+})->name('frontend.packeg.packeg');
+
+Route::get('/Ocean_Freight', function () {
+    return view('frontend.packeg.Ocean_Freight');
+})->name('frontend.packeg.Ocean_Freight');
+
+
+
+
+
+Route::get('/profile', [UserProfileController::class, 'show'])->name('frontend.profile.profile')->middleware('auth');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+
+
 // صفحات الأدمن، فقط الأدمن والسوبر أدمن يمكنهم الوصول إليها
-
-
 Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group(function () {
     // الصفحة الرئيسية للمدير
     Route::get('/', function () {

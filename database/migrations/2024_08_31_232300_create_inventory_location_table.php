@@ -15,8 +15,9 @@ class CreateInventoryLocationTable extends Migration
     {
         Schema::create('inventory_location', function (Blueprint $table) {
             $table->id(); // عمود رئيسي من نوع bigint مع زيادة تلقائية
-            $table->integer('local'); // عمود لتخزين القيمة المحلية
-            $table->string('status'); // عمود لتخزين حالة المخزون
+            $table->string('name'); // عمود لتخزين اسم الموقع
+            $table->enum('type', ['local', 'global']); // عمود لتحديد نوع الموقع
+            $table->string('status')->nullable(); // عمود لتخزين حالة المخزون، مع إمكانية أن يكون فارغًا
 
             $table->timestamps(); // ينشئ عمودين لتوقيت الإنشاء والتحديث
         });
