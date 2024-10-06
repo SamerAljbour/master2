@@ -15,7 +15,7 @@ class ServiceController extends Controller
 
 public function show($id)
 {
-    $packageType = PackageType::findOrFail($id);
+    $packageType = PackageType::with('packagePricing')->findOrFail($id);
     return view('frontend.service.index', compact('packageType'));
 }
 

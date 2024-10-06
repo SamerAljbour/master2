@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/PackageType.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,11 +9,9 @@ class PackageType extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'dimensions',
-        'price',
-        'description',
-    ];
-    
+    // تحديد العلاقة مع PackagePricing
+    public function packagePricing()
+    {
+        return $this->hasMany(PackagePricing::class, 'package_type_id');
+    }
 }

@@ -16,6 +16,7 @@ class CreatePackagePricingTable extends Migration
         Schema::create('package_pricing', function (Blueprint $table) {
             $table->id(); // عمود رئيسي من نوع bigint مع زيادة تلقائية
             $table->unsignedBigInteger('package_type_id'); // عمود لتخزين معرف نوع الطرد
+            $table->string('duration'); // عمود لتخزين مدة الحزمة (month_1, month_6, year_1)
             $table->decimal('price', 10, 2); // عمود لتخزين السعر باستخدام نوع decimal
 
             // تعريف العلاقة بين الجداول
