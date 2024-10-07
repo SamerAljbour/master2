@@ -15,6 +15,6 @@ class PackageType extends Model
     // تحديد العلاقة مع PackagePricing
     public function packagePricing()
     {
-        return $this->hasMany(PackagePricing::class, 'package_type_id');
+        return $this->hasMany(PackagePricing::class);
     }
 }

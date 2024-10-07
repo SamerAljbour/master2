@@ -17,7 +17,7 @@ class AddDetailsToPackagePricingTable extends Migration
             $table->string('space_dimensions')->nullable();
             $table->integer('max_items')->nullable();
             $table->string('rental_duration')->nullable();
-            $table->boolean('surveillance')->default(false);
+            $table->string('surveillance')->default(false);
             $table->string('delivery_service')->default(false);
             $table->text('usage_rules')->nullable();
         });
