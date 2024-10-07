@@ -9,6 +9,9 @@ class PackageType extends Model
 {
     use HasFactory;
 
+    // الحقول القابلة للتعيين الجماعي
+    protected $fillable = ['name', 'dimensions']; // أضف 'name' و 'dimensions' إلى fillable
+
     // تحديد العلاقة مع PackagePricing
     public function packagePricing()
     {
