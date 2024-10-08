@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController; // استيراد AdminControlle
 use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\ServiceController;
 
 
 /*
@@ -98,6 +99,8 @@ Route::get('/storage', function () {
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Inventory\InventoryRequestController;
+Route::post('/inventory/request', [InventoryRequestController::class, 'store'])->name('inventory.request');
 Route::get('/storage', [Controller::class, 'showEstimateForm'])->name('storage.form');
 
 
@@ -147,7 +150,6 @@ Route::put('/transfers/{id}', [TransferController::class, 'update'])->name('tran
                                                                                                                                                            
 
 
-use App\Http\Controllers\ServiceController;
 
 
 Route::get('/packeg', [ServiceController::class, 'index'])->name('services.index'); // لعرض جميع أنواع الخدمة

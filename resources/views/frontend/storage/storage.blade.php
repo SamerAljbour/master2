@@ -36,7 +36,6 @@
 <body>
     
    <x-navigation />
-
 <!-- Estimate_area start  -->
 <div class="Estimate_area overlay">
     <div class="container">
@@ -50,22 +49,23 @@
             </div>
             <div class="col-xl-8 col-lg-8 col-md-7">
                 <div class="form">
-                    <form action="#">
+                    <form action="{{ route('inventory.request') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <input type="text" placeholder="Your name" value="{{ $name }}" readonly>
+                                    <input type="text" name="name" placeholder="Your name" value="{{ Auth::user()->name }}" required readonly>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <input type="email" placeholder="Email" value="{{ $email }}" readonly>
+                                    <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email }}" required readonly>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <select class="wide">
-                                        <option data-display="Select Governorate">Select Governorate</option>
+                                    <select name="governorate" class="wide" required>
+                                        <option data-display="Select Governorate" value="">Select Governorate</option>
                                         <option value="Amman">Amman</option>
                                         <option value="Zarqa">Zarqa</option>
                                         <option value="Irbid">Irbid</option>
@@ -80,15 +80,23 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <input type="text" placeholder="Enter your housing details">
+                                    <input type="text" name="housing_details" placeholder="addres" required>
                                 </div>
                             </div>
+
+                          <div class="col-xl-6">
+                                <div class="input_field">
+                                <input type="text" name="number" placeholder="number" value="{{ old('number') }}" required>
+                                </div>
+                            </div>
+
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <select class="wide">
-                                        <option data-display="Select Size (m²)">Select Size (m²)</option>
+                                    <select name="size" class="wide" required>
+                                        <option data-display="Select Size (m²)" value="">Select Size (m²)</option>
                                         <option value="2x2">2x2 - $20</option>
                                         <option value="3x3">3x3 - $30</option>
                                         <option value="4x4">4x4 - $40</option>
@@ -105,7 +113,7 @@
                             <div class="col-xl-6">
                                 <div class="input_field">
                                     <label for="breakable">Is the item breakable?</label>
-                                    <select id="breakable" name="breakable" class="wide">
+                                    <select id="breakable" name="breakable" class="wide" required>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
@@ -115,7 +123,7 @@
                             <div class="col-xl-6">
                                 <div class="input_field">
                                     <label for="delivery_service">Do you need delivery service?</label>
-                                    <select id="delivery_service" name="delivery_service" class="wide">
+                                    <select id="delivery_service" name="delivery_service" class="wide" required>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>
@@ -123,7 +131,7 @@
                             </div>
                             <div class="col-xl-12">
                                 <div class="input_field">
-                                    <textarea placeholder="Message"></textarea>
+                                    <textarea name="message" placeholder="Message"></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-12">
