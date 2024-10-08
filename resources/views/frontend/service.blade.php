@@ -46,7 +46,8 @@
                 <div class="col-xl-12">
                     <div class="bradcam_text text-center">
                         <h3>Our Services</h3>
-                        <a class="boxed-btn3" href="packeg">Book now</a>
+                        <a class="boxed-btn3" href="packeg">For shipping</a>
+                        <a class="boxed-btn3" href="storage">For storage</a>
 
                     </div>
                 </div>

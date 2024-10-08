@@ -91,6 +91,14 @@ Route::get('/Ocean_Freight', function () {
 })->name('frontend.packeg.Ocean_Freight');
 
 
+Route::get('/storage', function () {
+    return view('frontend.storage.storage');
+})->name('frontend.storage.storage');
+
+
+use App\Http\Controllers\Controller;
+
+Route::get('/storage', [Controller::class, 'showEstimateForm'])->name('storage.form');
 
 
 
