@@ -11,8 +11,10 @@ use App\Http\Controllers\Auth\UserProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Inventory\InventoryRequestController;
 
-
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -97,11 +99,7 @@ Route::get('/storage', function () {
 })->name('frontend.storage.storage');
 
 
-use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\Inventory\InventoryRequestController;
-Route::post('/inventory/request', [InventoryRequestController::class, 'store'])->name('inventory.request');
-Route::get('/storage', [Controller::class, 'showEstimateForm'])->name('storage.form');
 
 
 
@@ -116,12 +114,10 @@ Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group
     Route::get('/', function () {
         return view('admin.home');
     })->name('home');
-
     // مسارات إدارة المستخدمين
     Route::get('/showuser', [AdminController::class, 'showUsers'])->name('showUsers');
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('createuser');
     Route::post('/users', [AdminController::class, 'storeUser'])->name('storeUser');
-
 
     Route::get('/edituser/{id}', [AdminController::class, 'edit'])->name('edituser');
     Route::put('/users/{id}', [AdminController::class, 'update'])->name('updateuser');
@@ -132,8 +128,6 @@ Route::middleware(['auth', 'admin:2|3'])->prefix('admin')->name('admin.')->group
     Route::get('/users/forcedelete/{id}', [AdminController::class, 'forceDelete'])->name('forceDeleteUser');
 
     Route::post('/logout', [App\Http\Controllers\Admin\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-
 
 // Routes for managing transfers
 Route::get('/transfers/create', [TransferController::class, 'create'])->name('transfers.create');
@@ -147,11 +141,15 @@ Route::put('/transfers/{id}', [TransferController::class, 'update'])->name('tran
 });
 
 
-                                                                                                                                                           
-
-
-
 
 Route::get('/packeg', [ServiceController::class, 'index'])->name('services.index'); // لعرض جميع أنواع الخدمة
 Route::get('/service/{id}', [ServiceController::class, 'show'])->name('service.details'); // عرض تفاصيل خدمة محددة
 Route::get('/packages/{id}', [ServiceController::class, 'show'])->name('packages.show'); // عرض تفاصيل نوع حزمة محددة
+
+
+Route::post('/inventory/request', [InventoryRequestController::class, 'store'])->name('inventory.request');
+Route::get('/storage', [Controller::class, 'showEstimateForm'])->name('storage.form');
+Route::get('/storage/view/{id}', [InventoryRequestController::class, 'showStorageView'])->name('storage.view');
+
+
+

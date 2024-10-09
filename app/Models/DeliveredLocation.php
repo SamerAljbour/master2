@@ -9,3 +9,5 @@ class DeliveredLocation extends Model
 {
     use HasFactory;
 }
+
+

@@ -6,14 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- CSS here -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -26,12 +18,7 @@
     <link rel="stylesheet" href="css/slick.css">
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
-
     <link rel="stylesheet" href="css/style.css">
-
-
-
-
 </head>
 <body>
     
@@ -83,13 +70,13 @@
 
                             <div class="col-xl-6">
                                 <div class="input_field">
-                                    <input type="text" name="housing_details" placeholder="addres" required>
+                                    <input type="text" name="housing_details" placeholder="Address" required>
                                 </div>
                             </div>
 
-                          <div class="col-xl-6">
+                            <div class="col-xl-6">
                                 <div class="input_field">
-                                <input type="text" name="number" placeholder="number" value="{{ old('number') }}" required>
+                                    <input type="text" name="number" placeholder="Number" value="{{ old('number') }}" required>
                                 </div>
                             </div>
 
@@ -120,6 +107,7 @@
                                 </div>
                             </div>
                             
+
                             <div class="col-xl-6">
                                 <div class="input_field">
                                     <label for="delivery_service">Do you need delivery service?</label>
@@ -129,17 +117,74 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- إضافة حقل مدة التخزين -->
+                            <div class="col-xl-6">
+                                <div class="input_field">
+                                    <select name="storage_duration" class="wide" required>
+                                        <option data-display="Select Storage Duration" value="">Select Storage Duration</option>
+                                        <option value="1 month">1 Month</option>
+                                        <option value="2 months">2 Months</option>
+                                        <option value="3 months">3 Months</option>
+                                        <option value="6 months">6 Months</option>
+                                        <option value="1 year">1 Year</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-xl-12">
                                 <div class="input_field">
                                     <textarea name="message" placeholder="Message"></textarea>
                                 </div>
                             </div>
+
+
+                        <!-- إضافة خيارات الدفع -->
+                        <div class="col-xl-12">
+                            <div class="input_field">
+                                <label for="payment_method">Payment Method:</label>
+                                <select id="payment_method" name="payment_method" class="wide" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="visa">Visa</option>
+                                    <option value="cash">Cash</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- إضافة زر الدفع إذا تم اختيار الفيزا -->
+                        <div class="col-xl-12" id="visa_payment_section" style="display: none;">
+                            <div class="input_field">
+                                <label for="card_number">Visa Card Number:</label>
+                                <input type="text" name="card_number" id="card_number" placeholder="Enter Visa Card Number" required>
+                            </div>
+                            <div class="input_field">
+                                <label for="card_expiry">Expiry Date:</label>
+                                <input type="text" name="card_expiry" id="card_expiry" placeholder="MM/YY" required>
+                            </div>
+                            <div class="input_field">
+                                <label for="card_cvv">CVV:</label>
+                                <input type="text" name="card_cvv" id="card_cvv" placeholder="Enter CVV" required>
+                            </div>
+                        </div>
+
+
+                            <div class="col-xl-12">
+                                <div class="input_field">
+                                <label   class="text-white">Total Price (including tax):</label>
+                                 <input type="hidden" name="total_price" id="total_price_hidden">  
+                                  <span id="total_price" class="text-white">$0.00</span>
+                                </div>
+                            </div>
+
+
+                            
                             <div class="col-xl-12">
                                 <div class="input_field">
                                     <button class="boxed-btn3-line" type="submit">Send Estimate</button>
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -148,46 +193,93 @@
 </div>
 <!-- Estimate_area end  -->
     
-
 <x-footer />
+
+<!-- JS هنا -->
+<script src="js/vendor/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/isotope.pkgd.min.js"></script>
+<script src="js/ajax-form.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/imagesloaded.pkgd.min.js"></script>
+<script src="js/scrollIt.js"></script>
+<script src="js/jquery.scrollUp.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/nice-select.min.js"></script>
+<script src="js/jquery.slicknav.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/slick.min.js"></script>
+
+<!-- Contact js -->
+<script src="js/contact.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/mail-script.js"></script>
+
+<script src="js/main.js"></script>
+
+
+<script>
+    // Define base prices for each size and month
+// Show or hide Visa payment section based on selected payment method
+$("#payment_method").change(function () {
+    const selectedPaymentMethod = $(this).val();
+    if (selectedPaymentMethod === "visa") {
+        $("#visa_payment_section").show();  // Show Visa payment section
+        $("#card_number").prop('required', true);
+        $("#card_expiry").prop('required', true);
+        $("#card_cvv").prop('required', true);
+    } else {
+        $("#visa_payment_section").hide();  // Hide Visa payment section
+        $("#card_number").prop('required', false);
+        $("#card_expiry").prop('required', false);
+        $("#card_cvv").prop('required', false);
+    }
+});
+    const basePricePerMonth = {
+        "2x2": 20,
+        "3x3": 30,
+        "4x4": 40,
+        "5x5": 50,
+        "6x6": 60,
+        "7x7": 70,
+        "8x8": 80,
+        "9x9": 90,
+        "10x10": 100,
+    };
+    // Define tax rate (for example, 25% tax)
+    const taxRate = 0.25;
+    function calculateTotal() {
+        const selectedSize = $("select[name='size']").val();
+        const selectedDuration = $("select[name='storage_duration']").val();
+        let totalPrice = 0;
+        if (selectedSize && selectedDuration) {
+            const basePrice = basePricePerMonth[selectedSize]; // Get base price for the selected size
+            const durationMonths = parseInt(selectedDuration); // Extract number of months from the selected duration
+            totalPrice = basePrice * durationMonths; // Calculate total price based on size and duration
+            // Calculate tax
+            const taxAmount = totalPrice * taxRate;
+            // Add tax to total price
+            totalPrice += taxAmount;
+        }
+        $("#total_price").text(`$${totalPrice.toFixed(2)}`); // Display the total price with tax
+        $("#total_price_hidden").val(totalPrice.toFixed(2));
+
+    }
+    // Update total price when size or storage duration is changed
+    $("select[name='size'], select[name='storage_duration']").change(function () {
+        calculateTotal();
+    });
+
+</script>
 
 
 </body>
-
-
-    <!-- JS here -->
-    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/ajax-form.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/scrollIt.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/nice-select.min.js"></script>
-    <script src="js/jquery.slicknav.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <!-- <script src="js/gijgo.min.js"></script> -->
-    <script src="js/slick.min.js"></script>
-
-
-
-    <!--contact js-->
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
-
-
-    <script src="js/main.js"></script>
-
-
-
 </html>

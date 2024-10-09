@@ -15,12 +15,19 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id(); // عمود رئيسي من نوع bigint مع زيادة تلقائية
+            $table->unsignedBigInteger('user_id'); // إضافة عمود user_id لتخزين معرف المستخدم
             $table->unsignedBigInteger('delivery_request_id'); // عمود لتخزين معرف طلب التوصيل
             $table->decimal('amount', 10, 2); // عمود لتخزين المبلغ
             $table->timestamp('payment_date'); // عمود لتخزين تاريخ ووقت الدفع
             $table->string('payment_method'); // عمود لتخزين طريقة الدفع
 
-            // تعريف العلاقة بين الجداول
+            // تعريف العلاقة بين user_id و users
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+
+            // تعريف العلاقة بين delivery_request_id و delivery_requests
             $table->foreign('delivery_request_id')
                   ->references('id')
                   ->on('delivery_requests')

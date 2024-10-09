@@ -12,16 +12,17 @@ class InventoryRequestController extends Controller
 {
     public function store(Request $request)
     {
+        // تحقق من صحة المدخلات
         $request->validate([
             'governorate' => 'required|string',
             'housing_details' => 'required|string',
-             'number' => 'required|string',
+            'number' => 'required|string',
             'size' => 'required|string',
             'breakable' => 'required|string',
             'delivery_service' => 'required|string',
+            'delivery_service' => 'nullable|string',
             'message' => 'nullable|string',
-
-            
+            'total_price' => 'nullable|string',
         ]);
 
         $inventoryRequest = new InventoryRequest();
@@ -47,10 +48,26 @@ class InventoryRequestController extends Controller
         $inventoryRequest->size = $request->input('size');
         $inventoryRequest->breakable = $request->input('breakable');
         $inventoryRequest->delivery_service = $request->input('delivery_service');
+        $inventoryRequest->storage_duration = $request->input('storage_duration');
         $inventoryRequest->message = $request->input('message');
+        $inventoryRequest->payment_method = $request->input('payment_method');
+        $inventoryRequest->total_price = $request->input('total_price');
 
         $inventoryRequest->save(); // حفظ الطلب في قاعدة البيانات
 
-        return redirect()->back()->with('success', 'تم إرسال الطلب بنجاح.');
+        // إعادة التوجيه إلى صفحة عرض التخزين مع معرف الطلب
+        return redirect()->route('storage.view', ['id' => $inventoryRequest->id]);
     }
+
+    public function showStorageView($id)
+    {
+        // جلب الطلب من قاعدة البيانات
+        $storageRequest = InventoryRequest::findOrFail($id);
+        // عرض معلومات الطلب
+        return view('frontend.storage.storageView', compact('storageRequest'));
+    }
+
+
+
+    
 }
