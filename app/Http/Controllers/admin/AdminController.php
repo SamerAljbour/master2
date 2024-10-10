@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\InventoryRequest;
 class AdminController extends Controller
 {
     // عرض نموذج تسجيل مستخدم جديد
@@ -119,4 +119,15 @@ class AdminController extends Controller
         
         return redirect()->route('admin.trashedusers')->with('success', 'User restored successfully.');
     }
+
+    // عرض قائمة المستخدمين
+public function showRequest()
+{
+    $users = User::all();
+    $inventoryRequests = InventoryRequest::all(); // جلب جميع الطلبات من جدول InventoryRequest
+    return view('admin.showRequest', compact('users', 'inventoryRequests')); // تمرير كل من المستخدمين والطلبات
+}
+    
+
+
 }

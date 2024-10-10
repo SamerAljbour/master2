@@ -162,14 +162,16 @@
     </li>
 
 
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
-              </span>
-              <span class="menu-title">Charts</span>
+        <li class="nav-item menu-items">
+        <a class="nav-link" href="{{ route('admin.showRequest') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-chart-bar"></i>
+                </span>
+                <span class="menu-title">طلبات المخزون</span> <!-- تأكد من تغيير العنوان إلى اللغة التي ترغب فيها -->
             </a>
-          </li>
+        </li>
+
+
 
           <li class="nav-item menu-items">
             <a class="nav-link" href="pages/icons/mdi.html">

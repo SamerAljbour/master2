@@ -102,7 +102,7 @@ Route::get('/storage', function () {
 
 
 
-
+Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update');
 Route::get('/profile', [UserProfileController::class, 'show'])->name('frontend.profile.profile')->middleware('auth');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
@@ -137,6 +137,13 @@ Route::delete('/transfers/{id}', [TransferController::class, 'destroy'])->name('
 // Edit and update transfer routes
 Route::get('/transfers/{id}/edit', [TransferController::class, 'edit'])->name('transfers.edit');
 Route::put('/transfers/{id}', [TransferController::class, 'update'])->name('transfers.update');
+
+ Route::get('/showRequest.', [AdminController::class, 'showRequest'])->name('showRequest');
+
+
+
+
+
 
 });
 

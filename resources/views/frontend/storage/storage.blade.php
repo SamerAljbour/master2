@@ -97,26 +97,28 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-6">
-                                <div class="input_field">
-                                    <label for="breakable">Is the item breakable?</label>
-                                    <select id="breakable" name="breakable" class="wide" required>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
+                    <div class="col-xl-6">
+                        <div class="input_field">
+                            <label for="breakable">Is the item breakable?</label>
+                            <select id="breakable" name="breakable" class="wide" required>
+                                <option value="" disabled selected>Select Breakable Option</option> 
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                                                
 
-                            <div class="col-xl-6">
-                                <div class="input_field">
-                                    <label for="delivery_service">Do you need delivery service?</label>
-                                    <select id="delivery_service" name="delivery_service" class="wide" required>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="col-xl-6">
+                        <div class="input_field">
+                            <label for="delivery_service">Do you need delivery service?</label>
+                            <select id="delivery_service" name="delivery_service" class="wide" required>
+                                <option value="" disabled selected>Select Delivery Service</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
 
                             <!-- إضافة حقل مدة التخزين -->
                             <div class="col-xl-6">
@@ -169,15 +171,15 @@
 
 
                             <div class="col-xl-12">
-                                <div class="input_field">
-                                <label   class="text-white">Total Price (including tax):</label>
-                                 <input type="hidden" name="total_price" id="total_price_hidden">  
-                                  <span id="total_price" class="text-white">$0.00</span>
-                                </div>
+                            <div class="input_field">
+                            <label   class="text-white">Total Price (including tax):</label>
+                            <input type="hidden" name="total_price" id="total_price_hidden">  
+                            <span id="total_price" class="text-white">$0.00</span>
+                            </div>
                             </div>
 
 
-                            
+
                             <div class="col-xl-12">
                                 <div class="input_field">
                                     <button class="boxed-btn3-line" type="submit">Send Estimate</button>
@@ -227,7 +229,25 @@
 
 
 <script>
-    // Define base prices for each size and month
+// Define base prices for each size and month
+const basePricePerMonth = {
+    "2x2": 20,
+    "3x3": 30,
+    "4x4": 40,
+    "5x5": 50,
+    "6x6": 60,
+    "7x7": 70,
+    "8x8": 80,
+    "9x9": 90,
+    "10x10": 100,
+};
+
+// Define tax rate (for example, 25% tax)
+const taxRate = 0.25;
+
+// Define delivery price
+const deliveryPrice = 15; // Example delivery fee
+
 // Show or hide Visa payment section based on selected payment method
 $("#payment_method").change(function () {
     const selectedPaymentMethod = $(this).val();
@@ -243,40 +263,38 @@ $("#payment_method").change(function () {
         $("#card_cvv").prop('required', false);
     }
 });
-    const basePricePerMonth = {
-        "2x2": 20,
-        "3x3": 30,
-        "4x4": 40,
-        "5x5": 50,
-        "6x6": 60,
-        "7x7": 70,
-        "8x8": 80,
-        "9x9": 90,
-        "10x10": 100,
-    };
-    // Define tax rate (for example, 25% tax)
-    const taxRate = 0.25;
-    function calculateTotal() {
-        const selectedSize = $("select[name='size']").val();
-        const selectedDuration = $("select[name='storage_duration']").val();
-        let totalPrice = 0;
-        if (selectedSize && selectedDuration) {
-            const basePrice = basePricePerMonth[selectedSize]; // Get base price for the selected size
-            const durationMonths = parseInt(selectedDuration); // Extract number of months from the selected duration
-            totalPrice = basePrice * durationMonths; // Calculate total price based on size and duration
-            // Calculate tax
-            const taxAmount = totalPrice * taxRate;
-            // Add tax to total price
-            totalPrice += taxAmount;
-        }
-        $("#total_price").text(`$${totalPrice.toFixed(2)}`); // Display the total price with tax
-        $("#total_price_hidden").val(totalPrice.toFixed(2));
 
+
+function calculateTotal() {
+    const selectedSize = $("select[name='size']").val();
+    const selectedDuration = $("select[name='storage_duration']").val();
+    const deliveryService = $("select[name='delivery_service']").val();
+    
+    let totalPrice = 0;
+    
+    if (selectedSize && selectedDuration) {
+        const basePrice = basePricePerMonth[selectedSize]; // Get base price for the selected size
+        const durationMonths = parseInt(selectedDuration); // Extract number of months from the selected duration
+        totalPrice = basePrice * durationMonths; // Calculate total price based on size and duration
+        
+        // Add delivery price if "Yes" is selected
+        if (deliveryService === "yes") {
+            totalPrice += deliveryPrice;
+        }
+
+        // Calculate tax
+        const taxAmount = totalPrice * taxRate;
+        totalPrice += taxAmount; // Add tax to total price
     }
-    // Update total price when size or storage duration is changed
-    $("select[name='size'], select[name='storage_duration']").change(function () {
-        calculateTotal();
-    });
+    
+    $("#total_price").text(`$${totalPrice.toFixed(2)}`); // Display the total price with tax
+    $("#total_price_hidden").val(totalPrice.toFixed(2));
+}
+
+// Update total price when size, storage duration, or delivery service is changed
+$("select[name='size'], select[name='storage_duration'], select[name='delivery_service']").change(function () {
+    calculateTotal();
+});
 
 </script>
 

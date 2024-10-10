@@ -65,9 +65,18 @@ class InventoryRequestController extends Controller
         $storageRequest = InventoryRequest::findOrFail($id);
         // عرض معلومات الطلب
         return view('frontend.storage.storageView', compact('storageRequest'));
+
+    }
+
+    public function showRequest()
+    {
+        $users = User::all();
+        $inventoryRequests = InventoryRequest::all(); // جلب جميع الطلبات
+        return view('admin.showRequest', compact('users', 'inventoryRequests'));
     }
 
 
 
-    
+
 }
+
