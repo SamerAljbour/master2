@@ -17,6 +17,7 @@ class CreateInventoryTable extends Migration
             $table->id(); // عمود رئيسي من نوع bigint مع زيادة تلقائية
             $table->string('name'); // عمود لتخزين اسم المخزون
             $table->unsignedBigInteger('location_id'); // تأكد من أن النوع bigint
+            $table->unsignedInteger('total_space'); // عمود لتخزين المساحة الإجمالية
 
             // إضافة المفتاح الخارجي
             $table->foreign('location_id')

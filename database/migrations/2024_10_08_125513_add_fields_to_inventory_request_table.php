@@ -19,12 +19,24 @@ class AddFieldsToInventoryRequestTable extends Migration
             $table->string('payment_method')->nullable(); // إضافة عمود طريقة الدفع
             $table->string('storage_duration'); // إضافة عمود مدة التخزين
             $table->decimal('total_price', 10, 2)->nullable(); // إضافة العمود هنا
+
+            // إضافة عمود location_id مع المفتاح الخارجي
+            $table->unsignedBigInteger('location_id')->nullable(); // عمود location_id
+            $table->foreign('location_id')
+                  ->references('location_id')->on('inventory') // ربط location_id مع id في جدول inventory
+                  ->onDelete('set null'); // أو 'cascade' حسب احتياجك
         });
     }
-
     public function down()
     {
         Schema::table('inventory_request', function (Blueprint $table) {
+            // تحقق مما إذا كان المفتاح الخارجي موجودًا قبل حذفه
+            if (Schema::hasColumn('inventory_request', 'location_id')) {
+                $table->dropForeign(['location_id']); // حذف المفتاح الخارجي
+                $table->dropColumn('location_id'); // حذف العمود location_id
+            }
+
+            // حذف الحقول الأخرى
             $table->dropColumn([
                 'governorate', 
                 'housing_details', 
@@ -35,6 +47,7 @@ class AddFieldsToInventoryRequestTable extends Migration
                 'payment_method', 
                 'message', 
                 'storage_duration',
+                'total_price', // إضافة total_price هنا
             ]);
         });
     }

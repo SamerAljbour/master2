@@ -25,5 +25,8 @@ class InventoryRequest extends Model
         'breakable',
         'delivery_service',
         'message',
+        'location_id',
+
+        
     ];
 }

@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'name',
+        'location_id',
+        'space',
+        'total_space',
+    ];
 
     public function location()
     {

@@ -23,6 +23,9 @@ class InventoryRequestController extends Controller
             'delivery_service' => 'nullable|string',
             'message' => 'nullable|string',
             'total_price' => 'nullable|string',
+            'location_id' => 'required|in:1,2,3', // تأكد من أن القيمة إما 1 أو 2
+
+            
         ]);
 
         $inventoryRequest = new InventoryRequest();
@@ -52,6 +55,8 @@ class InventoryRequestController extends Controller
         $inventoryRequest->message = $request->input('message');
         $inventoryRequest->payment_method = $request->input('payment_method');
         $inventoryRequest->total_price = $request->input('total_price');
+        $inventoryRequest->location_id = $request->input('location_id');
+
 
         $inventoryRequest->save(); // حفظ الطلب في قاعدة البيانات
 
