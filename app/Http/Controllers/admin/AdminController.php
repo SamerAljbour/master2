@@ -129,5 +129,28 @@ public function showRequest()
 }
     
 
+public function updateRequest(Request $request, $id)
+{
+    $request->validate([
+        'action' => 'required|in:accept,reject,pending', // إضافة pending كإجراء مسموح به
+    ]);
+
+    $inventoryRequest = InventoryRequest::findOrFail($id);
+
+    if ($request->action == 'accept') {
+        $inventoryRequest->status_id = 2; // تعيين الحالة إلى "قيد التنفيذ"
+    } elseif ($request->action == 'reject') {
+        $inventoryRequest->status_id = 3; // تعيين الحالة إلى "مرفوض"
+    } elseif ($request->action == 'pending') {
+        $inventoryRequest->status_id = 1; // تعيين الحالة إلى "معلق"
+    }
+
+    $inventoryRequest->save();
+
+    return redirect()->route('admin.showRequest')->with('success', 'Request updated successfully.');
+}
+
+
+
 
 }

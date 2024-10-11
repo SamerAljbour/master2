@@ -13,7 +13,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Inventory\InventoryRequestController;
-
+use App\Http\Controllers\Inventory\updateRequest;
 use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
@@ -138,12 +138,8 @@ Route::delete('/transfers/{id}', [TransferController::class, 'destroy'])->name('
 Route::get('/transfers/{id}/edit', [TransferController::class, 'edit'])->name('transfers.edit');
 Route::put('/transfers/{id}', [TransferController::class, 'update'])->name('transfers.update');
 
- Route::get('/showRequest.', [AdminController::class, 'showRequest'])->name('showRequest');
-
-
-
-
-
+Route::get('/showRequest.', [AdminController::class, 'showRequest'])->name('showRequest');
+    Route::patch('/requests/{id}', [AdminController::class, 'updateRequest'])->name('updateRequest');
 
 });
 
